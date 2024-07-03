@@ -47,7 +47,7 @@ func createTables() {
 	}
 
 	createNotesTable := `
-  CREATE TABLE IF NOT EXISTS events (
+  CREATE TABLE IF NOT EXISTS notes (
 	  id INTEGER PRIMARY KEY AUTOINCREMENT,
 	  title TEXT NOT NULL,
 	  description TEXT NOT NULL,
