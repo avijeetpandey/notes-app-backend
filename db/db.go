@@ -52,8 +52,7 @@ func createTables() {
 	  title TEXT NOT NULL,
 	  description TEXT NOT NULL,
 	  dateTime DATETIME NOT NULL,
-	  user_id INTEGER,
-	  FOREIGN KEY(user_id) REFERENCES users(id)
+	  priority INTEGER NOT NULL
   )
   `
 
