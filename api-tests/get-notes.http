@@ -1,0 +1,2 @@
+GET http://localhost:9000/notes
+Content-Type: application/json

@@ -31,6 +31,17 @@ func createNote(context *gin.Context) {
 	utility.ReturnResponse(http.StatusCreated, constants.DONE_MESSAGE, context, note)
 }
 
+func getAllNotes(context *gin.Context) {
+	notes, err := models.GetAllNotes()
+
+	if err != nil {
+		utility.ReturnError(http.StatusInternalServerError, constants.SOMETHING_WENT_WRONG_MESSAGE, context)
+		return
+	}
+
+	utility.ReturnResponse(http.StatusOK, constants.DONE_MESSAGE, context, notes)
+}
+
 func getNote(context *gin.Context) {
 	fmt.Println("GET")
 }
