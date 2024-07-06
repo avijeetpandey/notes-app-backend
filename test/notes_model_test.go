@@ -2,7 +2,6 @@ package test
 
 import (
 	"testing"
-	"time"
 
 	"github.com/avijeetpandey/notes-app-backend/models"
 )
@@ -12,7 +11,7 @@ func TestNoteCreationFromModel(t *testing.T) {
 		ID:          2322,
 		Title:       "test note",
 		Description: "description of note",
-		DateTime:    time.Now(),
+		DateTime:    "",
 	}
 
 	if note.Title != "test note" {
