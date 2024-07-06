@@ -8,6 +8,7 @@ func RegisterRoutes(server *gin.Engine) {
 	server.GET("/note/:id", getNote)
 	server.PUT("/note/:id", updateNote)
 	server.DELETE("/note/:id", deleteNote)
+	server.GET("/notes", getAllNotes)
 
 	// health route
 	server.GET("/health", health)

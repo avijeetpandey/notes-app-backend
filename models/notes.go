@@ -1,8 +1,6 @@
 package models
 
 import (
-	"time"
-
 	"github.com/avijeetpandey/notes-app-backend/db"
 )
 
@@ -12,7 +10,7 @@ type Note struct {
 	Title       string `binding:"required"`
 	Description string `binding:"required"`
 	Priority    int    `binding:"required"`
-	DateTime    time.Time
+	DateTime    string
 }
 
 // save an event
@@ -45,4 +43,30 @@ func (n *Note) Save() error {
 	n.ID = id
 
 	return err
+}
+
+// get all notes
+func GetAllNotes() ([]Note, error) {
+	query := `SELECT * FROM notes`
+	row, err := db.GlobalDB.Query(query)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer row.Close()
+
+	var notes []Note
+
+	for row.Next() {
+		var note Note
+		err := row.Scan(&note.ID, &note.Title, &note.Description, &note.Priority, &note.DateTime)
+		if err != nil {
+			return nil, err
+		}
+
+		notes = append(notes, note)
+	}
+
+	return notes, nil
 }

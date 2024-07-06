@@ -5,5 +5,5 @@ Content-Type: application/json
     "title": "go the gym",
     "description": "go the gym today and train shoulders",
     "priority": 1,
-    "dateTime": "2025-01-01T15:30:00.000Z"
+    "dateTime": "2025-01-01"
 }
