@@ -10,13 +10,12 @@ type Note struct {
 	Title       string `binding:"required"`
 	Description string `binding:"required"`
 	Priority    int    `binding:"required"`
-	DateTime    string
 }
 
 // save an event
 func (n *Note) Save() error {
 	query := `
-		INSERT INTO NOTES(title,description,priority,dateTime) VALUES (?,?,?,?)
+		INSERT INTO NOTES(title,description,priority) VALUES (?,?,?)
 	`
 
 	preparedStatement, err := db.GlobalDB.Prepare(query)
@@ -27,7 +26,7 @@ func (n *Note) Save() error {
 
 	defer preparedStatement.Close()
 
-	result, err := preparedStatement.Exec(n.Title, n.Description, n.Priority, n.DateTime)
+	result, err := preparedStatement.Exec(n.Title, n.Description, n.Priority)
 
 	if err != nil {
 		return nil
@@ -60,7 +59,7 @@ func GetAllNotes() ([]Note, error) {
 
 	for row.Next() {
 		var note Note
-		err := row.Scan(&note.ID, &note.Title, &note.Description, &note.Priority, &note.DateTime)
+		err := row.Scan(&note.ID, &note.Title, &note.Description, &note.Priority)
 		if err != nil {
 			return nil, err
 		}

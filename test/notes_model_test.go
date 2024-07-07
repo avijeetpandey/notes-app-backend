@@ -11,7 +11,6 @@ func TestNoteCreationFromModel(t *testing.T) {
 		ID:          2322,
 		Title:       "test note",
 		Description: "description of note",
-		DateTime:    "",
 	}
 
 	if note.Title != "test note" {
