@@ -1,6 +1,8 @@
 package models
 
 import (
+	"fmt"
+
 	"github.com/avijeetpandey/notes-app-backend/db"
 )
 
@@ -46,7 +48,7 @@ func (n *Note) Save() error {
 
 // get all notes
 func GetAllNotes() ([]Note, error) {
-	query := `SELECT * FROM notes`
+	query := `SELECT * FROM NOTES`
 	row, err := db.GlobalDB.Query(query)
 
 	if err != nil {
@@ -68,4 +70,19 @@ func GetAllNotes() ([]Note, error) {
 	}
 
 	return notes, nil
+}
+
+// get a note by ID
+func GetNoteById(id int64) (*Note, error) {
+	query := fmt.Sprintf("SELECT * FROM NOTES WHERE id= %d", id)
+	row := db.GlobalDB.QueryRow(query)
+
+	var note Note
+	err := row.Scan(&note.ID, &note.Title, &note.Description, &note.Priority)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &note, nil
 }

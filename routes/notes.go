@@ -3,6 +3,7 @@ package routes
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/avijeetpandey/notes-app-backend/constants"
 	"github.com/avijeetpandey/notes-app-backend/models"
@@ -43,7 +44,20 @@ func getAllNotes(context *gin.Context) {
 }
 
 func getNote(context *gin.Context) {
-	fmt.Println("GET")
+	noteId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+
+	if err != nil {
+		utility.ReturnError(http.StatusBadRequest, constants.PARSE_REQUEST_FAILED, context)
+		return
+	}
+
+	note, err := models.GetNoteById(noteId)
+
+	if err != nil {
+		utility.ReturnError(http.StatusInternalServerError, constants.SOMETHING_WENT_WRONG_MESSAGE, context)
+	}
+
+	utility.ReturnResponse(http.StatusOK, constants.DONE_MESSAGE, context, note)
 }
 
 func updateNote(context *gin.Context) {
