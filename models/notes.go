@@ -11,7 +11,7 @@ type Note struct {
 	ID          int64
 	Title       string `binding:"required"`
 	Description string `binding:"required"`
-	Priority    int    `binding:"required"`
+	Priority    int
 }
 
 // save an event
@@ -85,4 +85,49 @@ func GetNoteById(id int64) (*Note, error) {
 	}
 
 	return &note, nil
+}
+
+// update a note
+func (n Note) Update() error {
+	query := `
+		UPDATE NOTES 
+		SET title = ?, description = ?, priority = ?
+		WHERE id = ?	
+	`
+
+	preparedStatement, err := db.GlobalDB.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer preparedStatement.Close()
+
+	_, err = preparedStatement.Exec(&n.ID, &n.Title, &n.Description, &n.Priority)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// delete a note
+func (n Note) Delete() error {
+	query := `DELETE from NOTES WHERE id = ?`
+	preparedStatement, err := db.GlobalDB.Prepare(query)
+
+	if err != nil {
+		return err
+	}
+
+	defer preparedStatement.Close()
+
+	_, err = preparedStatement.Exec(&n.ID)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
