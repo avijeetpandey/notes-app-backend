@@ -1,0 +1,8 @@
+PUT  http://localhost:9000/note/1
+Content-Type: application/json
+
+{
+    "title": "boil eggs update",
+    "description": "go the market bring and boil eggs",
+    "priority": 2,
+}

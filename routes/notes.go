@@ -61,7 +61,36 @@ func getNote(context *gin.Context) {
 }
 
 func updateNote(context *gin.Context) {
-	fmt.Println("update")
+	noteId, err := strconv.ParseInt(context.Param("id"), 10, 64)
+
+	if err != nil {
+		utility.ReturnError(http.StatusBadRequest, constants.PARSE_REQUEST_FAILED, context)
+		return
+	}
+
+	_, err = models.GetNoteById(noteId)
+
+	if err != nil {
+		utility.ReturnError(http.StatusInternalServerError, constants.SOMETHING_WENT_WRONG_MESSAGE, context)
+		return
+	}
+
+	var updateNote models.Note
+	err = context.ShouldBindJSON(&updateNote)
+
+	if err != nil {
+		utility.ReturnError(http.StatusInternalServerError, constants.SOMETHING_WENT_WRONG_MESSAGE, context)
+		return
+	}
+
+	err = updateNote.Update()
+
+	if err != nil {
+		utility.ReturnError(http.StatusInternalServerError, constants.SOMETHING_WENT_WRONG_MESSAGE, context)
+		return
+	}
+
+	utility.ReturnResponse(http.StatusOK, constants.DONE_MESSAGE, context, updateNote)
 }
 
 func deleteNote(context *gin.Context) {
