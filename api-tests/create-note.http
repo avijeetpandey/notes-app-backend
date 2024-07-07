@@ -2,8 +2,7 @@ POST http://localhost:9000/notes
 Content-Type: application/json
 
 {
-    "title": "go the gym",
-    "description": "go the gym today and train shoulders",
-    "priority": 1,
-    "dateTime": "2025-01-01"
+    "title": "boil eggs",
+    "description": "go the market bring and boil eggs",
+    "priority": 1
 }
