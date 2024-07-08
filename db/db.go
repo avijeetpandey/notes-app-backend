@@ -61,5 +61,5 @@ func createTables() {
 		panic("could not create notes table")
 	}
 
-	fmt.Println("TABLES CREATED")
+	fmt.Println("TABLES CREATED SUCCESSFULLY")
 }
