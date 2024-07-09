@@ -113,7 +113,7 @@ func (n Note) Update() error {
 }
 
 // delete a note
-func (n Note) Delete() error {
+func Delete(id int64) error {
 	query := `DELETE from NOTES WHERE id = ?`
 	preparedStatement, err := db.GlobalDB.Prepare(query)
 
@@ -123,7 +123,7 @@ func (n Note) Delete() error {
 
 	defer preparedStatement.Close()
 
-	_, err = preparedStatement.Exec(&n.ID)
+	_, err = preparedStatement.Exec(id)
 
 	if err != nil {
 		return err
